@@ -33,6 +33,6 @@ foreach($leaderboard as $name => $score){
     echo "<tr><td>$name</td><td>$score</td></tr>";
 }
 echo "</table>";
-echo "<a href='homepage.html'>Start a new game</a>";
+echo "<a href='homepage.php'>Start a new game</a>";
 
 ?>

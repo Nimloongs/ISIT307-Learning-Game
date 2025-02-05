@@ -7,8 +7,8 @@ if (!isset($_SESSION['overall_points'])) {
 }
 
 // Get user's nickname and selected topic
-$nickname = $_POST['nickname'];
-$topic = $_POST['topic'];
+$nickname = $_POST['nickname']?? $_SESSION['nickname'];
+$topic = $_POST['topic']??$_SESSION['topic'];
 
 // Read questions from the appropriate file
 $questions_file = ($topic == 'science') ? 'science.txt' : 'numbers.txt';
