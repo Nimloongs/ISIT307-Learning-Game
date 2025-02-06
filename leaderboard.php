@@ -22,17 +22,40 @@ if ($sort == 'name'){
 } else {
     arsort($leaderboard);
 }
-
-echo "<h1>Leaderboard |</h>";
-echo "Sort by: ";
-echo "<a href='leaderboard.php?sort=name'>Name</a> | ";
-echo "<a href='leaderboard.php?sort=score'>Score</a>";
-echo "<table>";
-echo "<tr><th>Nickname</th><th>Score</th></tr>";
-foreach($leaderboard as $name => $score){
-    echo "<tr><td>$name</td><td>$score</td></tr>";
-}
-echo "</table>";
-echo "<a href='homepage.php'>Start a new game</a>";
-
 ?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaderboard</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="quiz-container">
+    <h1>Leaderboard</h1>
+    <p>Sort by: 
+        <a href="leaderboard.php?sort=name">Name</a> | 
+        <a href="leaderboard.php?sort=score">Score</a>
+    </p>
+
+    <table>
+        <tr>
+            <th>Nickname</th>
+            <th>Score</th>
+        </tr>
+        <?php foreach($leaderboard as $name => $score): ?>
+            <tr>
+                <td><?php echo htmlspecialchars($name); ?></td>
+                <td><?php echo htmlspecialchars($score); ?></td>
+            </tr>
+        <?php endforeach; ?>
+    </table>
+
+    <a href="homepage.php" class="link-button">Start a new game</a>
+</div>
+
+</body>
+</html>

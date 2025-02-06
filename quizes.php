@@ -7,15 +7,11 @@ if (!isset($_SESSION['overall_points'])) {
 }
 
 // Get user's nickname and selected topic
-$nickname = $_POST['nickname']?? $_SESSION['nickname'];
-$topic = $_POST['topic']??$_SESSION['topic'];
+$nickname = $_POST['nickname'] ?? $_SESSION['nickname'];
+$topic = $_POST['topic'] ?? $_SESSION['topic'];
 
 // Read questions from the appropriate file
 $questions_file = ($topic == 'science') ? 'science.txt' : 'numbers.txt';
-
-/* Debug: Check the file path
-echo "Loading questions from: $questions_file<br>";
-*/
 
 // Check if the file exists
 if (!file_exists($questions_file)) {
@@ -25,12 +21,6 @@ if (!file_exists($questions_file)) {
 // Read questions from the file
 $questions = file($questions_file, FILE_IGNORE_NEW_LINES);
 
-/* Debug: Check the contents of $questions
-echo "<pre>";
-print_r($questions);
-echo "</pre>";
-*/
-
 // Check if $questions is an array and not empty
 if (is_array($questions) && !empty($questions)) {
     // Randomly select 3 questions
@@ -39,26 +29,43 @@ if (is_array($questions) && !empty($questions)) {
     die("Error: No questions found in the file.");
 }
 
-//Store the selected questions and topic in the session
+// Store the selected questions and topic in the session
 $_SESSION['selected_questions'] = $selected_questions;
 $_SESSION['questions'] = $questions;
 $_SESSION['topic'] = $topic;
 
 // Display the quiz form
-echo "<h1>Quiz: " . ucfirst($topic) . "</h1>";
-echo "<form action='results.php' method='POST'>";
-foreach ($selected_questions as $index) {
-    list($question, $answer) = explode('|', $questions[$index]);
-    echo "<p>$question</p>";
-    if ($topic == 'science') {
-        echo "<input type='radio' name='q$index' value='true'> True ";
-        echo "<input type='radio' name='q$index' value='false'> False<br>";
-    } else {
-        echo "<input type='text' name='q$index'><br>";
-    }
-}
-echo "<input type='hidden' name='nickname' value='$nickname'>";
-echo "<input type='hidden' name='topic' value='$topic'>";
-echo "<button type='submit'>Submit</button>";
-echo "</form>";
 ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz: <?php echo ucfirst($topic); ?></title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>Quiz: <?php echo ucfirst($topic); ?></h1>
+        <form action="results.php" method="POST">
+            <?php
+            foreach ($selected_questions as $index) {
+                list($question, $answer) = explode('|', $questions[$index]);
+                echo "<div class='question'>";
+                echo "<p>$question</p>";
+                if ($topic == 'science') {
+                    echo "<label><input type='radio' name='q$index' value='true'> True</label>";
+                    echo "<label><input type='radio' name='q$index' value='false'> False</label><br>";
+                } else {
+                    echo "<input type='text' name='q$index' class='text-input'><br>";
+                }
+                echo "</div>";
+            }
+            ?>
+            <input type="hidden" name="nickname" value="<?php echo $nickname; ?>">
+            <input type="hidden" name="topic" value="<?php echo $topic; ?>">
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</body>
+</html>

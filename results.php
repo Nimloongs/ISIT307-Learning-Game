@@ -52,28 +52,45 @@ foreach ($scores as $user => $score) {
 file_put_contents($scores_file, $updated_content);
 
 // Display the Results
-echo "<h1>Quiz Results</h1>";
-echo "<p>Correct Answers: $correct</p>";
-echo "<p>Incorrect Answers: $incorrect</p>";
-echo "<p>Quiz Score: $quiz_score</p>";
-echo "<p><strong>$nickname's Overall Points: </strong>" . $_SESSION['overall_points'] . "</p>";
-
-// For Science quiz
-echo "<form action='quizes.php' method='POST'>";
-echo "<input type='hidden' name='topic' value='science'>";
-echo "<button type='submit'>New Science Quiz</button>";
-echo "</form><br>";
-
-// For Numbers quiz
-echo "<form action='quizes.php' method='POST'>";
-echo "<input type='hidden' name='topic' value='numbers'>";
-echo "<button type='submit'>New Numbers Quiz</button>";
-echo "</form><br>";
-
-// View Leaderboard link (no session update)
-echo "<a href='leaderboard.php'>View Leaderboard</a><br>";
-
-// Exit link (no session update)
-echo "<a href='exit.php'>Exit</a><br>";
-
 ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Results</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="result-container">
+        <h1>Quiz Results</h1>
+        <p>Correct Answers: <?php echo $correct; ?></p>
+        <p>Incorrect Answers: <?php echo $incorrect; ?></p>
+        <p>Quiz Score: <?php echo $quiz_score; ?></p>
+        <p><strong><?php echo $nickname; ?>'s Overall Points: </strong><?php echo $_SESSION['overall_points']; ?></p>
+
+        <!-- For Science quiz -->
+        <form action="quizes.php" method="POST" class="quiz-button-form">
+            <input type="hidden" name="topic" value="science">
+            <input type="hidden" name="nickname" value="<?php echo $nickname; ?>">
+            <button type="submit">New Science Quiz</button>
+        </form><br>
+
+        <!-- For Numbers quiz -->
+        <form action="quizes.php" method="POST" class="quiz-button-form">
+            <input type="hidden" name="topic" value="numbers">
+            <input type="hidden" name="nickname" value="<?php echo $nickname; ?>">
+            <button type="submit">New Numbers Quiz</button>
+        </form><br>
+
+        <!-- View Leaderboard link (no session update) -->
+        <a href="leaderboard.php" class="link-button">View Leaderboard</a><br>
+
+        <!-- Exit link (using a hidden form to pass nickname) -->
+<form action="exit.php" method="POST" class="quiz-button-form">
+    <input type="hidden" name="nickname" value="<?php echo $nickname; ?>">
+    <button type="submit">Exit</button>
+</form><br>
+    </div>
+</body>
+</html>

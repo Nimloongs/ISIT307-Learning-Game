@@ -1,4 +1,8 @@
-Kenneth|28
-James|-2
-Alpha|-1
-Bob|-1
+Ace|35
+Bob|52
+Charlie|10
+Dennis|4
+Eliot|22
+Kenneth|-12
+Jacob|0
+Jacob|0
